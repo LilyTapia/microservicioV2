@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MicroservicioTiendaApplication",
+            "request": "launch",
+            "mainClass": "com.tienda.microservicio.MicroservicioTiendaApplication",
+            "projectName": "microservicio",
+            "args": "",
+            "env": {
+                "AWS_ACCESS_KEY_ID":"ASIAQTBMXH4SXMNNE63Q",
+                "AWS_SECRET_ACCESS_KEY":"YFkrojzdXPIXld3atTzRs2Jvw8rbu+8t9vmZTPep",
+                "AWS_SESSION_TOKEN":"IQoJb3JpZ2luX2VjECoaCXVzLXdlc3QtMiJHMEUCIQDttZOFb2P0Zdl51kZSIEvlFSJsw5jq+IS2RRaDh+uTvwIgbk5KPN09BLRZKGJxDnOd7HLH4rjeGUo0fhG3eSpKrtQqrgIIIxABGgwwNDA4OTU5ODc0OTMiDAlV0j7U2/L0jC56ACqLAnIamIc3UNuL36rHDd4ccU6RVPF7BROQ5WKvjSfdMSZz1InJJdGOd10rX369666b24pqM8kqZjA2fuD+VhNMy9Pn4D6vgHI3DNnwoMMHpLnGiPNvv6kJmht2w4RoHFpV+Mk8SinaOPrMehU+G8s1reej5nAnUXxmSPqnlZ48TQiAQRcL04wV2pn3YVJn1VwwRzXq07mO8JVQbfVg+o/LHeKeC4bqczA1O9+Tq4no6USZKK09s2YzESqF/Z5L1ua0/G0Xv2Dn6Mddf+ipCQ4Gmy5xY/ZjxwRI/tpkEqyCLvqRbi73T6A5VntQQV3mUKoPEJ74sz8CpEcve/G3XUaSFEZU2/IZ4wQd1gA0kjDyhujCBjqdAW7IGOEaSnzFq5LUjO3l6W+kENHEDOVPEiqLrHxRxqWJjpn4e3WGJqc4T7tUgii5zAV9A/QyBkVh5LrXo/bqEie0SjkL0ymF5FWxsYh3PLYsZc/kcGsj4G8xZo2GFthdk0gHmVNtWoTyvdA3c8VGjo7RAjf5AbCH0JrzqKpxZv/nyLXKME/uC0OYrLawQN1zyP4ZAJelq1m0zRUQYn8=",
+                "AWS_REGION":"us-east-1"
+            }
+        }
+    ]
+}
