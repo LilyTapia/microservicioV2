@@ -41,38 +41,38 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1  # Cambia a tu región
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}  # Añadido aquí
-    # Paso 5.5: 
+
+     # Paso 5.5: Añadir llave SSH
       - name: Add SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-
-      # Paso 6: Conectarse a EC2 y desplegar el contenedor
+     # Paso 6: Conectarse a EC2 y desplegar el contenedor
       - name: SSH commands to deploy
-  run: |
-    ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.USER_SERVER }}@${{ secrets.EC2_HOST }} << 'EOF'
-      # Autenticar en DockerHub desde EC2
-      echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      # Descargar la última versión de la imagen
-      docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${{ secrets.USER_SERVER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            # Autenticación DockerHub
+            echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
 
-      # Detener cualquier contenedor en el puerto 8080
-      docker ps --filter "publish=8080" --format "{{.ID}}" | xargs -r docker stop
+            # Detener contenedores que usan el puerto 8080
+            docker ps --filter "publish=8080" --format "{{.ID}}" | xargs -r docker stop
 
-      # Eliminar contenedor previo con nombre my-app
-      docker rm my-app || true
+            # Eliminar contenedor antiguo por nombre
+            docker rm my-app || true
 
-      # Iniciar el contenedor con volumen EFS montado
-      docker run -d \
-        --name my-app \
-        -v /mnt/efs:/app/efs \
-        -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-        -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-        -e AWS_SESSION_TOKEN=${{ secrets.AWS_SESSION_TOKEN }} \
-        -e AWS_REGION=us-east-1 \
-        -p 8080:8080 \
-        ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
-    EOF
+            # Ejecutar el contenedor con volumen EFS
+            docker run -d \
+              --name my-app \
+              -v /mnt/efs:/app/efs \
+              -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+              -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+              -e AWS_SESSION_TOKEN=${{ secrets.AWS_SESSION_TOKEN }} \
+              -e AWS_REGION=us-east-1 \
+              -p 8080:8080 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+          EOF
 
+    
